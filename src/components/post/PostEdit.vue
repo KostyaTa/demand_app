@@ -150,7 +150,7 @@ export default {
 
             let apiUrl = process.env.VUE_APP_API_DOMAIN + '/api/v1/images'
 
-             axios.post('http://localhost/api/v1/images', fileData, config)
+             axios.post(apiUrl, fileData, config)
 
              .then(({data}) => {
  

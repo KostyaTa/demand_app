@@ -10,7 +10,7 @@
         <li v-for="post in postsList" :key="post.title" class="col-lg-3 col-md-4 posts-list-item full-width p-3">
            <div class="posts-list-item-image">
             <router-link :to="{path: '/post/'+post.id+'/'+postLink(post.title), params: {id: post.id, title: post.title}}" class="read-more" v-if="post.imagePath">
-                <img :src="'http://localhost/'+post.imagePath" :alt="'Image ' + post.title" class="img-responsive w-100" width="400" height="225">
+                <img :src="imageLink(post.imagePath)" :alt="'Image ' + post.title" class="img-responsive w-100" width="400" height="225">
 
               </router-link>
             </div>
@@ -125,6 +125,9 @@ export default {
     postLink: function(title) {
       let href = title.replaceAll(' ', '-')
       return href.toLowerCase()
+    },
+    imageLink: function(url) {
+      return process.env.VUE_APP_API_DOMAIN +'/'+ url
     },
     paginationMaxSize: function(){
       this.paginationPages = [ ...Array(this.paginatonMaxPages).keys() ].map( i => i+1)
