@@ -11,7 +11,7 @@ import Answers from '@/components/post/PostAnswers.vue'
 export default {
   components:{
     'PostView' : Post,
-    'PostAnswers' : Answers
+    'PostAnswers' : Answers,
   }
   
 }

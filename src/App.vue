@@ -1,15 +1,14 @@
 <template>
-  <header-site></header-site>
-  <router-view/>
+  <HeaderSite></HeaderSite>
+  <router-view class="content"></router-view>
+    <FooterSite></FooterSite>
 </template>
 <script>
 import HeaderSite from './components/HeaderSite.vue'
-import Header from './components/HeaderSite.vue'
+import FooterSite from './components/FooterSite.vue'
 export default {
-  components: { HeaderSite },
-    comments: {
-      'header-site' : Header
-    }
+  components: { HeaderSite, FooterSite },
+
 }
 </script>
 <style lang="scss">

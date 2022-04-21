@@ -84,7 +84,6 @@ export default {
                   'Authorization': `Bearer ${token}` 
                   }
           }
-          console.log(process.env.VUE_APP_API_USER_LOGIN_URL)
         axios({
           method: 'get',
           url: process.env.VUE_APP_API_DOMAIN + process.env.VUE_APP_API_POSTS_URL + '?page='+this.currentPage+'&sortByTitle='+this.sortByTitle+'&keyword='+this.searchKeyword,
@@ -93,7 +92,6 @@ export default {
     
       .then(({data}) => {
         this.loadPost = false
-        console.log(data)
         this.postsList = [...data.data]
 
         this.totalPages = data.total
@@ -101,8 +99,8 @@ export default {
         this.currentPage = data.currentPage
 
       })
-      .catch(({response}) => {
-                console.log('error: ' + response)
+      .catch(({message}) => {
+                console.log('error: ' + message)
             })
     },
     sortingPosts: function(){

@@ -19,11 +19,12 @@
 <script>
 import axios from 'axios'
 import Cookies from 'js-cookie';
+
 export default {
     props: {
         postId: String
     },
-
+    
     data() {
         return {
             postInfo: null,
@@ -56,8 +57,8 @@ export default {
                     this.postInfo = data.data
                     this.user = data.data.user
                 })
-                .catch(({messages}) => {
-                    console.log('error: ' + messages)
+                .catch(({message}) => {
+                    console.log('error: ' + message)
                 })
             }
         },

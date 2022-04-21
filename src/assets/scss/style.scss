@@ -1,3 +1,19 @@
+body {
+    height: 100%;
+}
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+header {
+    flex: 0 0 auto;
+    margin-bottom: 2rem;
+}
+.content {
+    flex: 1 0 auto;
+}
+
 img {
     width: 100%;
     height: auto;
@@ -38,4 +54,24 @@ img {
     .text {
         min-height: 150px;
     }
+}
+
+.new-answers-wrap {
+    padding-top: 1rem;
+    textarea {
+        min-height: 150px;
+    }
+    .btn-wrap {
+        padding-top: 1rem;
+        .btn {
+            margin: 10px 2rem;
+        }
+    }
+}
+
+.footer {
+    flex: 0 0 auto;
+    background-color: #dee2e6;
+    padding: 2rem 0;
+    margin-top: 2rem;;
 }
