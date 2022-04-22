@@ -53,6 +53,7 @@ export default {
             .then(() => {
                 this.$store.dispatch('logOut') 
                 this.LoginBtnShow = false
+                this.$router.push({ name: 'home'})
             })
             .catch(({response}) => {
 

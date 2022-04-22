@@ -51,7 +51,6 @@ export default {
             
             .then(({data}) => {
                 let token = data.data.token
-                console.log(token)
                 this.$store.dispatch('LogIn', token) 
                 this.$router.push({ name: 'home'})
 

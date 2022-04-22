@@ -88,26 +88,6 @@ export default {
                   'Authorization': `Bearer ${token}` 
                   }
           }
-    /*    axios({
-          method: 'get',
-          url: apiUrl,
-          config
-        })
-    
-      .then(({data}) => {
-        this.loadPost = false
-        this.postsList = [...data.data]
-
-        this.totalPages = data.total
-
-        this.currentPage = data.currentPage
-
-        console.log(data)
-
-      })
-      .catch(({message}) => {
-                console.log('error: ' + message)
-            })*/
 
             fetch( apiUrl, 
               {
@@ -122,7 +102,8 @@ export default {
                  this.loadPost = false
                 this.postsList = [...data.data]
 
-                this.totalPages = data.total
+                this.totalPages = Math.ceil(data.total/data.perPage)
+
 
                 this.currentPage = data.currentPage
               })

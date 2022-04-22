@@ -10,7 +10,7 @@
                     <div><p>{{answer.text}}</p></div>
                 </li>
             </ul>
-            <div>
+            <div v-if="loginBtnShow">
                 <a href="" class="btn btn-primary" @click.prevent="addNew = !addNew" v-if="!addNew"> Add Answer</a>
             </div>
             <div class="new-answers-wrap container row" v-if="addNew">
@@ -38,11 +38,13 @@ export default {
             user: null,
             newAnswer: null,
             addNew: false,
-            answerMessage: null
+            answerMessage: null,
+            loginBtnShow:false
         }
     },
     mounted() {
         this.getAnswers()
+        this.isLogin()
     },
     methods: {
         getAnswers: function() {
@@ -65,6 +67,11 @@ export default {
         dateTime: function(value) {
             let date = new Date(value)
             return date.getFullYear()+'-'+ ((date.getMonth() + 1) > 9 ? '' : '0') + (date.getMonth() + 1) + (date.getDate() > 9 ? '' : '0') +'-'+ date.getDate()
+        },
+        isLogin() {
+            if(Cookies.get('X-CSRF-TOKEN')) {
+                this.loginBtnShow = true
+            }
         },
         createAnswer: function () {
             let token = Cookies.get('X-CSRF-TOKEN')
