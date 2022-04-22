@@ -20,8 +20,13 @@
                 {{post.title}}
               </router-link>
             </h4>
-            <router-link :to="{path: '/post/'+post.id+'/'+postLink(post.title), params: {id: post.id, title: post.title}}" class="read-more" >Read more ></router-link>
-            <a href="" class="btn btn-secondary btn-sm" v-if="post.isOwner" @click="editPost(post.id)">Edit</a>
+           
+
+            <router-link 
+                :to="{path: '/post-edit', 
+                query: {id: post.id}}" 
+                v-if="post.isOwner" class="btn btn-secondary btn-sm" 
+            >Edit ></router-link>
         </li>
       </ul>
       <nav aria-label="Page navigation" v-if="postsList && totalPages > 1">
@@ -48,7 +53,6 @@
 
 <script>
 // @ is an alias to /src
-import axios from 'axios'
 import Cookies from 'js-cookie';
 export default {
 
@@ -76,7 +80,7 @@ export default {
       this.loadPost = true
 
       let token = Cookies.get('X-CSRF-TOKEN')
-
+      let apiUrl = process.env.VUE_APP_API_DOMAIN + process.env.VUE_APP_API_POSTS_URL + '?page='+this.currentPage+'&sortByTitle='+this.sortByTitle+'&keyword='+this.searchKeyword
       const config = {
               headers: { 
                   'access-control-allow-origin': '* ',
@@ -84,9 +88,9 @@ export default {
                   'Authorization': `Bearer ${token}` 
                   }
           }
-        axios({
+    /*    axios({
           method: 'get',
-          url: process.env.VUE_APP_API_DOMAIN + process.env.VUE_APP_API_POSTS_URL + '?page='+this.currentPage+'&sortByTitle='+this.sortByTitle+'&keyword='+this.searchKeyword,
+          url: apiUrl,
           config
         })
     
@@ -98,10 +102,33 @@ export default {
 
         this.currentPage = data.currentPage
 
+        console.log(data)
+
       })
       .catch(({message}) => {
                 console.log('error: ' + message)
-            })
+            })*/
+
+            fetch( apiUrl, 
+              {
+                method: 'GET',
+                headers: config.headers
+                },
+              )
+              .then((response) => {
+                return response.json();
+              })
+              .then((data) => {
+                 this.loadPost = false
+                this.postsList = [...data.data]
+
+                this.totalPages = data.total
+
+                this.currentPage = data.currentPage
+              })
+              .catch((message) => {
+                console.log('error: ' + message)
+              });
     },
     sortingPosts: function(){
      
@@ -114,30 +141,37 @@ export default {
       }
       this.getPosts()
     },
+
     isLogin() {
       if(Cookies.get('X-CSRF-TOKEN')) {
           this.LoginBtnShow = true
       }
     },
-    editPost: function() {
-      
+
+    editPost: function(id) {
+      this.$router.push({path: '/post-edit/'.id, params: {id: id}})
     },
+
     postLink: function(title) {
       let href = title.replaceAll(' ', '-')
       return href.toLowerCase()
     },
+
     imageLink: function(url) {
       return process.env.VUE_APP_API_DOMAIN +'/'+ url
     },
+
     paginationMaxSize: function(){
       this.paginationPages = [ ...Array(this.paginatonMaxPages).keys() ].map( i => i+1)
     },
+    
     paginationCorrentPage: function(index) {
       if(index == this.currentPage) {
         return true
       }
       return false
     },
+
     paginationClick: function(index, event) {
       if(index > this.totalPages || index < 1) {
         return

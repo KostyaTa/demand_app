@@ -55,7 +55,6 @@ export default {
                 .then((data) => {
 
                     this.answersList = data.data.data
-                    console.log(data)
 
                 })
                 .catch(({message}) => {
